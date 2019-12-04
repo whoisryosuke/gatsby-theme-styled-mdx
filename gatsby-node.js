@@ -140,11 +140,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const posts = result.data.allMdx.edges
   // We'll call `createPage` for each result
   posts.forEach(({ node }, index) => {
+    console.log(node.fields.slug, node.frontmatter.section)
     // Grab random tag to do related posts
-    var tag =
-      node.frontmatter.tags[
-        Math.floor(Math.random() * node.frontmatter.tags.length)
-      ]
+    let tag
+    const { tags: postTags, section } = node.frontmatter
+    if (postTags) {
+      tag = postTags[Math.floor(Math.random() * postTags.length)]
+    }
 
     // Page object for page creation
     let pendingPage = {
@@ -159,7 +161,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     }
 
     // Change page template based on section
-    if (node.frontmatter.section == 'blog') {
+    if (section == 'blog') {
+      console.log(
+        'making it a blog post',
+        node.fields.slug,
+        node.frontmatter.section
+      )
       pendingPage.component = require.resolve(`./src/templates/blog-post.js`)
     }
 
@@ -183,14 +190,16 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   // Make tag pages
   tags.forEach(tag => {
-    let tagName = tag.replace(/\s+/g, '-').toLowerCase()
-    createPage({
-      path: `/tags/${tagName}/`,
-      component: require.resolve(`./src/templates/tags.js`),
-      context: {
-        tag,
-      },
-    })
+    if (tag) {
+      let tagName = tag.replace(/\s+/g, '-').toLowerCase()
+      createPage({
+        path: `/tags/${tagName}/`,
+        component: require.resolve(`./src/templates/tags.js`),
+        context: {
+          tag,
+        },
+      })
+    }
   })
 
   // Create pagination archive pages
