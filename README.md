@@ -9,7 +9,6 @@ You create content your using MDX, a mix of Markdown and JSX, allowing you to im
 ## Features
 
 - 🎛 MDX
-- 📖 Storybook
 - 🔏 Typescript
 - 💄 Styled Components
 - 📦 Styled System
@@ -24,15 +23,143 @@ You create content your using MDX, a mix of Markdown and JSX, allowing you to im
 - 👕 Prettier + ESLint + Markdown Lint
 - 🔌 Nodemon
 
-## Structure
+# Getting Started
 
-- [Home](src/pages/index.js)
-- [MDX Pages](content/pages/how-to-use.mdx)
-- Blog
+1. Clone the example repo: `git clone git@github.com:whoisryosuke/gatsby-theme-styled-mdx-example.git`
+1. Install any dependencies: `yarn`
+1. Run the development server: `yarn develop`
+1. Your site should be running at: http://localhost:8000
+
+## Manual Setup
+
+1. Create a new Gatsby project: `npx gatsby new myproject`
+2. Install the theme as a dependency: `yarn add gatsby-theme-styled-mdx`
+3. Add the theme and necessary filesystem configurations to `gatsby-config.js`:
+
+```js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `content`,
+        path: `${__dirname}/content/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `content`,
+        path: `${__dirname}/src/pages/`,
+      },
+    },
+    { resolve: `gatsby-theme-styled-mdx`, options: {} },
+  ],
+}
+```
+
+4. Create directories that will hold your blog and page content. By default (see above filesystem paths), the theme is configured to grab MDX files from a `/content/` folder located in your project root. You can also store content in subfolders to organize it, Gatsby will search the content folder recursively.
+
+```shell
+📦
+├── 📂 content
+    ├── 📂 blog
+        └── 📄 sample-blog.mdx
+    ├── 📄 another-blog-post.mdx
+    └── 📄 sample-page.mdx
+├── 📂 node_modules
+├── 📂 src
+├── 📄 .gitignore
+├── 📄 package.json
+```
+
+5. Create a test MDX file in the `/content/` directory you just made (see [Post Format](#Post+Format+%2F+Fields))
+6. Start the development server: `gatsby develop`
+
+## Configure SEO plugins
+
+This theme comes pre-installed with SEO plugins for a site manifest, sitemap, and integrating Google Analytics.
+
+Add the following to the plugins array of your `gatsby-config.js` and customize any values necessary:
+
+```js
+{
+  resolve: `gatsby-plugin-manifest`,
+  options: {
+    name: 'Your Website Name',
+    short_name: 'YourSite',
+    start_url: '/',
+    background_color: '#F5F5F5',
+    theme_color: '#005CDD',
+    display: 'minimal-ui',
+    icon: `${__dirname}/static/assets/favicon/android-chrome-512x512.png`, // This path is relative to the root of the site.
+    // icons: [
+    //   {
+    //     // Everything in /static will be copied to an equivalent
+    //     // directory in /public during development and build, so
+    //     // assuming your favicons are in /static/favicons,
+    //     // you can reference them here
+    //     src: `/assets/favicons/android-chrome-192x192.png`,
+    //     sizes: `192x192`,
+    //     type: `image/png`,
+    //   },
+    //   {
+    //     src: `/assets/favicons/android-chrome-512x512.png`,
+    //     sizes: `512x512`,
+    //     type: `image/png`,
+    //   },
+    // ],
+  },
+},
+{
+  resolve: `gatsby-plugin-sitemap`,
+  options: {
+    // output: `/some-other-sitemap.xml`,
+    // exclude: [`/path/to/page`, `/another/page`],
+    query: `
+    {
+      site {
+        siteMetadata {
+          siteUrl
+        }
+      }
+
+      allSitePage {
+        edges {
+          node {
+            path
+          }
+        }
+      }
+  }`,
+  },
+},
+{
+  resolve: `gatsby-plugin-google-analytics`,
+  options: {
+    trackingId: '420',
+    // Puts tracking script in the head instead of the body
+    head: false,
+    // Setting this parameter is optional
+    anonymize: true,
+    // Setting this parameter is also optional
+    respectDNT: true,
+  },
+},
+```
+
+> For more information about each plugin and it's API, check out their Github or Gatsby documentation.
+
+## Theme Structure
+
+- [Frontpage](src/pages/index.js)
+- [MDX Pages](src/templates/mdx-page.js)
+- MDX Blog
+- - [Single Blog Post](src/templates/blog-post.js)
 - - [Pagination Archive](src/templates/blog-archive.js)
 - Tags
-- - [Tag Archives](src/templates/tags.js)
-- [About (React page example)](src/pages/about.js)
+- - [Single Tag Archive](src/templates/tags.js)
+- - [All Tag Archives](src/pages/tags.js)
 
 ## Post Format / Fields
 
@@ -59,7 +186,10 @@ Your post here
 
 - Section can be `blog` or `page`.
 - Tags must be array
+- Date must be in 'YYYY-MM-DD' format. If you forget to add a zero (e.g. 2019-4-20 instead of 2019-04-20) GraphQL will crash.
 - Body content can include Markdown, HTML, or JSX.
+
+> You can also use custom components in your body content, like Rebass components. You can find all these components here to reference or override: `gatsby-theme-styled-mdx/src/layouts/Theme.jsx`
 
 ## Plugins
 
@@ -77,10 +207,15 @@ Configure in `gatsby-config.js`.
 
 ## Development
 
-Running on GatsbyJS, an SSG that creates static React apps.
+This is a Gatsby theme, which works as a dependency installed on another Gatsby site. This means you have to work in an environment that supports editing relative node modules, like Yarn Workspaces. To expedite development, there is a "workspace" repo that you can clone to replicate this environment easily.
 
-1. `npm install`
-2. `npm run develop`
+1. Clone the workspace repo: `git clone git@github.com:whoisryosuke/gatsby-theme-styled-mdx-workspace.git`
+1. Clone the example repo (inside workspace folder): `git clone git@github.com:whoisryosuke/gatsby-theme-styled-mdx-example.git`
+1. Clone the theme (inside workspace folder): `git clone git@github.com:whoisryosuke/gatsby-theme-styled-mdx.git`
+1. Install all dependencies by running `yarn` in the workspace root.
+1. Start the development server (in workspace root): `yarn develop`
+
+> Check out [the Gatsby guide on themes](https://www.gatsbyjs.org/docs/themes/what-are-gatsby-themes/) for more information on the architecture and how to work with themes
 
 ## Deployment
 
@@ -107,15 +242,11 @@ To enable this, just initialize a git repo in the project, commit your changes, 
 
 This site is also capable of deploying on Netlify. Simply login to Netlify, create a new app, and point to this repository. Follow the steps, make sure Netlify is running `gatsby build` and pointing to the `/public` directory. This also allows you to use the Netlify CMS, since it requires a server for OAuth2 support and hosting on Netlify allows you re-build on each edit (rather than building from you personal machine and deploying from there).
 
-## Todo
-
-- [] Add property to frontmatter for layout, then render each component based on that (or default) in `gatsby-node.js`. Would allow users to break convention and have different header/footers depending on the page (as well as any styles/code they want to include in the new layout).
-- [] Integrate with flat-file CMS that supports MDX for easier authoring. ~~Netlify CMS doesn't support Typescript~~
-
 ## Credits
 
 - [GatsbyJS](http://gatsbyjs.org)
 - [ReactJS](http://reactjs.org)
 - [Styled Components](http://styled-components.com)
 - [Styled System](https://github.com/styled-system/styled-system)
+- [ryosuke-gatsby-blog](https://github.com/whoisryosuke/ryosuke-gatsby-blog/)
 - [gatsby-starter-typescript-rebass-netlifycms](https://github.com/damassi/gatsby-starter-typescript-rebass-netlifycms/)
