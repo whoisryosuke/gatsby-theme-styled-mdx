@@ -1,3 +1,8 @@
+<p align="center">
+<a href="https://www.npmjs.com/package/gatsby-theme-styled-mdx"><img alt="npm" src="https://img.shields.io/npm/v/gatsby-theme-styled-mdx"></a>
+<a href="https://github.com/whoisryosuke/gatsby-theme-styled-mdx/blob/master/LICENSE"><img alt="NPM" src="https://img.shields.io/npm/l/gatsby-theme-styled-mdx"></a>
+</p>
+
 # Gatsby Theme Styled MDX
 
 A template to easily create landing pages or a blog using the [GatsbyJS](http://gatsbyjs.org/docs/) framework to generate a static React powered PWA. It's lightning fast, SEO friendly, and deploys directly to a CDN like Github Pages or [Netlify](http://netlify.com).
