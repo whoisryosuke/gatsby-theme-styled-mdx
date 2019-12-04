@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-styled-mdx",
-  "description": "Design system focused Gatsby starter setup with MDX, Storybook, Styled Components, and Typescript",
+  "description": "Design system focused Gatsby theme using with MDX, Styled Components, and Typescript",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Ryosuke <ryosuke.san.hana@gmail.com> (@whoisryosuke)",
