@@ -140,7 +140,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const posts = result.data.allMdx.edges
   // We'll call `createPage` for each result
   posts.forEach(({ node }, index) => {
-    console.log(node.fields.slug, node.frontmatter.section)
     // Grab random tag to do related posts
     let tag
     const { tags: postTags, section } = node.frontmatter
@@ -162,11 +161,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
     // Change page template based on section
     if (section == 'blog') {
-      console.log(
-        'making it a blog post',
-        node.fields.slug,
-        node.frontmatter.section
-      )
       pendingPage.component = require.resolve(`./src/templates/blog-post.js`)
     }
 
