@@ -7,7 +7,7 @@
 
 A template to easily create landing pages or a blog using the [GatsbyJS](http://gatsbyjs.org/docs/) framework to generate a static React powered PWA. It's lightning fast, SEO friendly, and deploys directly to a CDN like Github Pages or [Netlify](http://netlify.com).
 
-You create content your using MDX, a mix of Markdown and JSX, allowing you to import and use React components inside of your Markdown (and much more). And you can create those React components inside Storybook, an isolated development environment for coding more accessible components.
+You create content your using MDX, a mix of Markdown and JSX, allowing you to import and use React components inside of your Markdown (and much more).
 
 🔎 Check out the [how-to-use MDX file](https://github.com/whoisryosuke/gatsby-theme-styled-mdx-example/blob/master/content/pages/how-to-use.mdx) to see MDX in action!
 
