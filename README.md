@@ -242,6 +242,11 @@ To enable this, just initialize a git repo in the project, commit your changes, 
 
 This site is also capable of deploying on Netlify. Simply login to Netlify, create a new app, and point to this repository. Follow the steps, make sure Netlify is running `gatsby build` and pointing to the `/public` directory. This also allows you to use the Netlify CMS, since it requires a server for OAuth2 support and hosting on Netlify allows you re-build on each edit (rather than building from you personal machine and deploying from there).
 
+## References
+
+- [Example Gatsby project using theme](github.com/whoisryosuke/gatsby-theme-styled-mdx-example)
+- [Development Workspace for theme](github.com/whoisryosuke/gatsby-theme-styled-mdx-workspace)
+
 ## Credits
 
 - [GatsbyJS](http://gatsbyjs.org)
